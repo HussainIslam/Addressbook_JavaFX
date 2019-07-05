@@ -189,7 +189,32 @@ public class Main extends Application {
         Button updateButton = new Button("Update");
         updateButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         updateButton.setOnAction(event -> {
-            System.out.println("Working from update button");
+            try {
+
+                String paddedFirstName = String.format("%-"+TOKEN_LENGTH+"s", inFirstName.getText());
+                String paddedLastName = String.format("%-"+TOKEN_LENGTH+"s", inLastName.getText());
+                String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
+                String paddedProvince = String.format("%-"+TOKEN_LENGTH+"s", tProvince.getValue().toString());
+                String paddedPostalCode = String.format("%-"+TOKEN_LENGTH+"s", tPostalCode.getText());
+
+                raf.seek(raf.getFilePointer() - 110);
+                raf.writeUTF(paddedFirstName);
+                raf.writeUTF(paddedLastName);
+                raf.writeUTF(paddedCity);
+                raf.writeUTF(paddedProvince);
+                raf.writeUTF(paddedPostalCode);
+                raf.writeChar('\n');
+
+                /*//clear the input fields
+                inFirstName.setText("");
+                inLastName.setText("");
+                tCity.setText("");
+                tProvince.setValue("");
+                tPostalCode.setText("");*/
+                System.out.println("Working from update button");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
 

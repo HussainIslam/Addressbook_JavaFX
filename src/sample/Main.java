@@ -125,6 +125,9 @@ public class Main extends Application {
                 long curPosition = raf.getFilePointer();
                 System.out.println("in next, Before " +raf.getFilePointer());
                 raf.seek(curPosition + 2);
+                if (raf.getFilePointer() == raf.length()){
+                    raf.seek(0);
+                }
                 System.out.println("in next, After " +raf.getFilePointer());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
@@ -146,8 +149,7 @@ public class Main extends Application {
             try {
                 long curPosition = raf.getFilePointer();
                 System.out.println("in previous, Before "+raf.getFilePointer());
-                curPosition -= 222;
-                raf.seek(curPosition);
+                raf.seek(curPosition - 222);
                 System.out.println("in previous, After "+raf.getFilePointer());
 
                 inFirstName.setText(raf.readUTF().trim());
@@ -155,7 +157,7 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                //System.out.println("in previous, After reading "+raf.getFilePointer());
+                System.out.println("in previous, After reading "+raf.getFilePointer());
 
                 System.out.println("Working from previous button");
             } catch (Exception ex) {
@@ -169,15 +171,15 @@ public class Main extends Application {
         lastButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         lastButton.setOnAction(event -> {
             try {
-                //long length = raf.length();
+                long length = raf.length();
                 raf.seek(raf.length() - 112);
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-
-                //System.out.println("Length "+length);
+                System.out.println("in last, after reading " +raf.getFilePointer());
+                System.out.println("Length "+length);
 
                 System.out.println("Working from last button");
             } catch (IOException e) {
@@ -204,14 +206,9 @@ public class Main extends Application {
                 raf.writeUTF(paddedProvince);
                 raf.writeUTF(paddedPostalCode);
                 raf.writeChar('\n');
-
-                /*//clear the input fields
-                inFirstName.setText("");
-                inLastName.setText("");
-                tCity.setText("");
-                tProvince.setValue("");
-                tPostalCode.setText("");*/
-                System.out.println("Working from update button");
+                raf.seek(raf.getFilePointer() - 2);
+                System.out.println("in update, after writing" +raf.getFilePointer());
+                this.showAlert(Alert.AlertType.CONFIRMATION, "Confirmation","Update Successful", "Address successfully updated");
             } catch (IOException e) {
                 e.printStackTrace();
             }

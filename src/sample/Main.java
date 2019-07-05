@@ -99,12 +99,16 @@ public class Main extends Application {
         firstButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         firstButton.setOnAction(e -> {
             try{
+                System.out.println("in first, Before " +raf.getFilePointer());
                 raf.seek(0);
+                System.out.println("in first, After " +raf.getFilePointer());
+
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
+                System.out.println("in first, After reading " +raf.getFilePointer());
             }
             catch (Exception ex){
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
@@ -119,13 +123,15 @@ public class Main extends Application {
         nextButton.setOnAction(e -> {
             try{
                 long curPosition = raf.getFilePointer();
+                System.out.println("in next, Before " +raf.getFilePointer());
                 raf.seek(curPosition + 2);
-                System.out.println(curPosition);
+                System.out.println("in next, After " +raf.getFilePointer());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
+                System.out.println("in next, After reading " +raf.getFilePointer());
             }
             catch (Exception ex){
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
@@ -139,13 +145,18 @@ public class Main extends Application {
         previousButton.setOnAction(event -> {
             try {
                 long curPosition = raf.getFilePointer();
-                raf.seek(curPosition - 110);
-                System.out.println(curPosition);
+                System.out.println("in previous, Before "+raf.getFilePointer());
+                curPosition -= 222;
+                raf.seek(curPosition);
+                System.out.println("in previous, After "+raf.getFilePointer());
+
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
+                System.out.println("in previous, After reading "+raf.getFilePointer());
+
                 System.out.println("Working from previous button");
             } catch (Exception ex) {
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +

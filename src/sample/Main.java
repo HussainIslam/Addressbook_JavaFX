@@ -155,7 +155,7 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                System.out.println("in previous, After reading "+raf.getFilePointer());
+                //System.out.println("in previous, After reading "+raf.getFilePointer());
 
                 System.out.println("Working from previous button");
             } catch (Exception ex) {
@@ -168,7 +168,21 @@ public class Main extends Application {
         Button lastButton = new Button("Last");
         lastButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         lastButton.setOnAction(event -> {
-            System.out.println("Working from last button");
+            try {
+                //long length = raf.length();
+                raf.seek(raf.length() - 112);
+                inFirstName.setText(raf.readUTF().trim());
+                inLastName.setText(raf.readUTF().trim());
+                tCity.setText(raf.readUTF().trim());
+                tProvince.setValue(raf.readUTF().trim());
+                tPostalCode.setText(raf.readUTF().trim());
+
+                //System.out.println("Length "+length);
+
+                System.out.println("Working from last button");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
 

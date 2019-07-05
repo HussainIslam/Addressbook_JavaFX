@@ -63,10 +63,13 @@ public class Main extends Application {
                 String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
                 String paddedProvince = String.format("%-"+TOKEN_LENGTH+"s", tProvince.getValue().toString());
                 String paddedPostalCode = String.format("%-"+TOKEN_LENGTH+"s", tPostalCode.getText());
+
+                //identifying the last position in the file
                 long length = raf.length();
                 raf.setLength(length + 1);
                 raf.seek(length);
 
+                //writing padded information to the file including newline at the end
                 raf.writeChars(paddedFirstName);
                 raf.writeChars(paddedLastName);
                 raf.writeChars(paddedCity);
@@ -74,8 +77,14 @@ public class Main extends Application {
                 raf.writeChars(paddedPostalCode);
                 raf.writeChar('\n');
 
+                //clear the input fields
+                inFirstName.setText("");
+                inLastName.setText("");
+                tCity.setText("");
+                tProvince.setValue("");
+                tPostalCode.setText("");
 
-
+                //Displaying confirmation message
                 this.showAlert(Alert.AlertType.CONFIRMATION, "Successful", "Operation Successful", "Data was successfully written to file");
             }
             catch (Exception ex){

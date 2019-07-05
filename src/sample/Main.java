@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class Main extends Application {
@@ -70,11 +71,11 @@ public class Main extends Application {
                 raf.seek(length);
 
                 //writing padded information to the file including newline at the end
-                raf.writeChars(paddedFirstName);
-                raf.writeChars(paddedLastName);
-                raf.writeChars(paddedCity);
-                raf.writeChars(paddedProvince);
-                raf.writeChars(paddedPostalCode);
+                raf.writeUTF(paddedFirstName);
+                raf.writeUTF(paddedLastName);
+                raf.writeUTF(paddedCity);
+                raf.writeUTF(paddedProvince);
+                raf.writeUTF(paddedPostalCode);
                 raf.writeChar('\n');
 
                 //clear the input fields
@@ -97,21 +98,59 @@ public class Main extends Application {
         Button firstButton = new Button("First");
         firstButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         firstButton.setOnAction(e -> {
-            System.out.println("WOrking from first button");
+            try{
+                raf.seek(0);
+                inFirstName.setText(raf.readUTF().trim());
+                inLastName.setText(raf.readUTF().trim());
+                tCity.setText(raf.readUTF().trim());
+                tProvince.setValue(raf.readUTF().trim());
+                tPostalCode.setText(raf.readUTF().trim());
+            }
+            catch (Exception ex){
+                this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
+                        "exists and in the correct location.");
+
+            }
         });
 
 
         Button nextButton = new Button("Next");
         nextButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         nextButton.setOnAction(e -> {
-            System.out.println("Working from next button");
+            try{
+                long curPosition = raf.getFilePointer();
+                raf.seek(curPosition + 2);
+                System.out.println(curPosition);
+                inFirstName.setText(raf.readUTF().trim());
+                inLastName.setText(raf.readUTF().trim());
+                tCity.setText(raf.readUTF().trim());
+                tProvince.setValue(raf.readUTF().trim());
+                tPostalCode.setText(raf.readUTF().trim());
+            }
+            catch (Exception ex){
+                this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
+                        "exists and in the correct location.");
+            }
         });
 
 
         Button previousButton = new Button("Previous");
         previousButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         previousButton.setOnAction(event -> {
-            System.out.println("Working from previous button");
+            try {
+                long curPosition = raf.getFilePointer();
+                raf.seek(curPosition - 110);
+                System.out.println(curPosition);
+                inFirstName.setText(raf.readUTF().trim());
+                inLastName.setText(raf.readUTF().trim());
+                tCity.setText(raf.readUTF().trim());
+                tProvince.setValue(raf.readUTF().trim());
+                tPostalCode.setText(raf.readUTF().trim());
+                System.out.println("Working from previous button");
+            } catch (Exception ex) {
+                this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
+                        "exists and in the correct location.");
+            }
         });
 
 

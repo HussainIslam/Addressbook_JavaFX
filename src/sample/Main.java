@@ -149,7 +149,13 @@ public class Main extends Application {
             try {
                 long curPosition = raf.getFilePointer();
                 System.out.println("in previous, Before "+raf.getFilePointer());
-                raf.seek(curPosition - 222);
+                if((curPosition - 222) < 0){
+                    raf.seek(raf.length()-112);
+                }
+                else{
+                    raf.seek(curPosition - 222);
+
+                }
                 System.out.println("in previous, After "+raf.getFilePointer());
 
                 inFirstName.setText(raf.readUTF().trim());

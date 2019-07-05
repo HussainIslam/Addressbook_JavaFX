@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Last Button working">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Next button moving over to the begining when reaches end">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Task2/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Task2/sample/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
@@ -67,8 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="212" column="42" selection-start-line="207" selection-start-column="16" selection-end-line="212" selection-end-column="42" />
+            <state relative-caret-position="221">
+              <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -76,8 +76,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addressBook.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" lean-forward="true" selection-end-line="4" />
+            <state relative-caret-position="85">
+              <caret line="5" lean-forward="true" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -339,7 +339,21 @@
       <option name="project" value="LOCAL" />
       <updated>1562303834955</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Update Button functional, need improvement on accuracy">
+      <created>1562304231657</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1562304231657</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Next button moving over to the begining when reaches end">
+      <created>1562305878091</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1562305878091</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -395,7 +409,10 @@
     <MESSAGE value="First and Next Button functioning" />
     <MESSAGE value="Previous button working" />
     <MESSAGE value="Last Button working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Last Button working" />
+    <MESSAGE value="Update Button functional, need fine tuning" />
+    <MESSAGE value="Update Button functional, need improvement on accuracy" />
+    <MESSAGE value="Next button moving over to the begining when reaches end" />
+    <option name="LAST_COMMIT_MESSAGE" value="Next button moving over to the begining when reaches end" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -422,15 +439,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/addressBook.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-end-line="4" />
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-end-line="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="212" column="42" selection-start-line="207" selection-start-column="16" selection-end-line="212" selection-end-column="42" />
+        <state relative-caret-position="221">
+          <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
         </state>
       </provider>
     </entry>

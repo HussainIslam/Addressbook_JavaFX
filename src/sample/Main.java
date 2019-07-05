@@ -70,7 +70,7 @@ public class Main extends Application {
 
 
                 //retrieving data from the input fields
-                String paddedSerialNumber = String.format("%-"+TOKEN_LENGTH+"s", Long.toString((length / 110) + 1));
+                String paddedSerialNumber = String.format("%-"+TOKEN_LENGTH+"s", Long.toString((length / 130) + 1));
                 String paddedFirstName = String.format("%-"+TOKEN_LENGTH+"s", inFirstName.getText());
                 String paddedLastName = String.format("%-"+TOKEN_LENGTH+"s", inLastName.getText());
                 String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
@@ -93,6 +93,7 @@ public class Main extends Application {
                 tCity.setText("");
                 tProvince.setValue("");
                 tPostalCode.setText("");
+                raf.seek(0);
 
                 //Displaying confirmation message
                 this.showAlert(Alert.AlertType.CONFIRMATION, "Successful", "Operation Successful", "Data was successfully written to file");

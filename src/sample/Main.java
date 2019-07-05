@@ -11,10 +11,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.RandomAccessFile;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        //Creating RandomAccessFile object with the file name
+        File file = new File("addressBook.txt");
+        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+
         VBox pane = new VBox();
         pane.setPadding(new Insets(12));
         pane.setSpacing(10);
@@ -44,20 +51,51 @@ public class Main extends Application {
 
 
         Button addButton = new Button("Add");
-        Button firstButton = new Button("First");
-        Button nextButton = new Button("Next");
-        Button previousButton = new Button("Previous");
-        Button lastButton = new Button("Last");
-        Button updateButton = new Button("Update");
         addButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        addButton.setOnAction(e -> {
+            System.out.println("Working from add button");
+        });
+
+        Button firstButton = new Button("First");
         firstButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        firstButton.setOnAction(e -> {
+            System.out.println("WOrking from first button");
+        });
+
+
+        Button nextButton = new Button("Next");
         nextButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        nextButton.setOnAction(e -> {
+            System.out.println("Working from next button");
+        });
+
+
+        Button previousButton = new Button("Previous");
         previousButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        previousButton.setOnAction(event -> {
+            System.out.println("Working from previous button");
+        });
+
+
+        Button lastButton = new Button("Last");
         lastButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        lastButton.setOnAction(event -> {
+            System.out.println("Working from last button");
+        });
+
+
+        Button updateButton = new Button("Update");
         updateButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
+        updateButton.setOnAction(event -> {
+            System.out.println("Working from update button");
+        });
+
+
         HBox buttons = new HBox();
         buttons.setSpacing(5);
         buttons.getChildren().addAll(addButton, firstButton, nextButton, previousButton, lastButton, updateButton);
+
+
 
         pane.getChildren().addAll(firstNamePane, lastNamePane, address, buttons);
         primaryStage.setTitle("Address Book");

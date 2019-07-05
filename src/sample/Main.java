@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -23,6 +24,10 @@ public class Main extends Application {
         VBox pane = new VBox();
         pane.setPadding(new Insets(12));
         pane.setSpacing(10);
+        pane.setAlignment(Pos.CENTER);
+
+        Label itemSerial = new Label("");
+
 
         Label lFirstName = new Label("First Name:");
         lFirstName.prefWidthProperty().bind(pane.widthProperty().divide(6));
@@ -58,19 +63,23 @@ public class Main extends Application {
                     tPostalCode.getText().equals("")){
                     throw new Exception();
                 }
+                //identifying the last position in the file
+                long length = raf.length();
+                raf.setLength(length + 1);
+                raf.seek(length);
+
+
                 //retrieving data from the input fields
+                String paddedSerialNumber = String.format("%-"+TOKEN_LENGTH+"s", Long.toString((length / 110) + 1));
                 String paddedFirstName = String.format("%-"+TOKEN_LENGTH+"s", inFirstName.getText());
                 String paddedLastName = String.format("%-"+TOKEN_LENGTH+"s", inLastName.getText());
                 String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
                 String paddedProvince = String.format("%-"+TOKEN_LENGTH+"s", tProvince.getValue().toString());
                 String paddedPostalCode = String.format("%-"+TOKEN_LENGTH+"s", tPostalCode.getText());
 
-                //identifying the last position in the file
-                long length = raf.length();
-                raf.setLength(length + 1);
-                raf.seek(length);
 
                 //writing padded information to the file including newline at the end
+                raf.writeUTF(paddedSerialNumber);
                 raf.writeUTF(paddedFirstName);
                 raf.writeUTF(paddedLastName);
                 raf.writeUTF(paddedCity);
@@ -103,6 +112,7 @@ public class Main extends Application {
                 raf.seek(0);
                 System.out.println("in first, After " +raf.getFilePointer());
 
+                itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
@@ -124,11 +134,15 @@ public class Main extends Application {
             try{
                 long curPosition = raf.getFilePointer();
                 System.out.println("in next, Before " +raf.getFilePointer());
-                raf.seek(curPosition + 2);
+                if(curPosition != 0){
+                    raf.seek(curPosition + 2);
+                }
                 if (raf.getFilePointer() == raf.length()){
                     raf.seek(0);
                 }
                 System.out.println("in next, After " +raf.getFilePointer());
+
+                itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
@@ -149,15 +163,16 @@ public class Main extends Application {
             try {
                 long curPosition = raf.getFilePointer();
                 System.out.println("in previous, Before "+raf.getFilePointer());
-                if((curPosition - 222) < 0){
-                    raf.seek(raf.length()-112);
+                if((curPosition - 266) < 0){
+                    raf.seek(raf.length() - 134);
                 }
                 else{
-                    raf.seek(curPosition - 222);
+                    raf.seek(curPosition - 266);
 
                 }
                 System.out.println("in previous, After "+raf.getFilePointer());
 
+                itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
@@ -178,7 +193,9 @@ public class Main extends Application {
         lastButton.setOnAction(event -> {
             try {
                 long length = raf.length();
-                raf.seek(raf.length() - 112);
+                raf.seek(raf.length() - 134);
+
+                itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
                 inLastName.setText(raf.readUTF().trim());
                 tCity.setText(raf.readUTF().trim());
@@ -198,14 +215,15 @@ public class Main extends Application {
         updateButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         updateButton.setOnAction(event -> {
             try {
-
+                String paddedSerial = String.format("%-"+TOKEN_LENGTH+"s", itemSerial.getText().substring(15));
                 String paddedFirstName = String.format("%-"+TOKEN_LENGTH+"s", inFirstName.getText());
                 String paddedLastName = String.format("%-"+TOKEN_LENGTH+"s", inLastName.getText());
                 String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
                 String paddedProvince = String.format("%-"+TOKEN_LENGTH+"s", tProvince.getValue().toString());
                 String paddedPostalCode = String.format("%-"+TOKEN_LENGTH+"s", tPostalCode.getText());
 
-                raf.seek(raf.getFilePointer() - 110);
+                raf.seek(raf.getFilePointer() - 132);
+                raf.writeUTF(paddedSerial);
                 raf.writeUTF(paddedFirstName);
                 raf.writeUTF(paddedLastName);
                 raf.writeUTF(paddedCity);
@@ -227,7 +245,7 @@ public class Main extends Application {
 
 
 
-        pane.getChildren().addAll(firstNamePane, lastNamePane, address, buttons);
+        pane.getChildren().addAll(itemSerial, firstNamePane, lastNamePane, address, buttons);
         primaryStage.setTitle("Address Book");
         primaryStage.setScene(new Scene(pane));
         primaryStage.show();

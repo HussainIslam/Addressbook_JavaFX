@@ -3,10 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,7 +50,21 @@ public class Main extends Application {
         Button addButton = new Button("Add");
         addButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         addButton.setOnAction(e -> {
-            System.out.println("Working from add button");
+            try{
+                String firstName = inFirstName.getText();
+                String lastName = inLastName.getText();
+                String city = tCity.getText();
+                String province = tProvince.getValue().toString();
+                String postalCode = tPostalCode.getText();
+                String paddedFirstName = String.format("%20s", firstName);
+
+            }
+            catch (Exception ex){
+
+            }
+
+
+            System.out.println(paddedFirstName);
         });
 
         Button firstButton = new Button("First");
@@ -103,6 +114,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public void showAlert(Alert.AlertType type, String title, String header, String content){
+        Alert alert = new Alert(type);
+    }
 
     public static void main(String[] args) {
         launch(args);

@@ -109,9 +109,7 @@ public class Main extends Application {
         firstButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         firstButton.setOnAction(e -> {
             try{
-                System.out.println("in first, Before " +raf.getFilePointer());
                 raf.seek(0);
-                System.out.println("in first, After " +raf.getFilePointer());
 
                 itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
@@ -119,7 +117,6 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                System.out.println("in first, After reading " +raf.getFilePointer());
             }
             catch (Exception ex){
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
@@ -134,14 +131,12 @@ public class Main extends Application {
         nextButton.setOnAction(e -> {
             try{
                 long curPosition = raf.getFilePointer();
-                System.out.println("in next, Before " +raf.getFilePointer());
                 if(curPosition != 0){
                     raf.seek(curPosition + 2);
                 }
                 if (raf.getFilePointer() == raf.length()){
                     raf.seek(0);
                 }
-                System.out.println("in next, After " +raf.getFilePointer());
 
                 itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
@@ -149,7 +144,6 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                System.out.println("in next, After reading " +raf.getFilePointer());
             }
             catch (Exception ex){
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
@@ -163,7 +157,6 @@ public class Main extends Application {
         previousButton.setOnAction(event -> {
             try {
                 long curPosition = raf.getFilePointer();
-                System.out.println("in previous, Before "+raf.getFilePointer());
                 if((curPosition - 266) < 0){
                     raf.seek(raf.length() - 134);
                 }
@@ -171,7 +164,6 @@ public class Main extends Application {
                     raf.seek(curPosition - 266);
 
                 }
-                System.out.println("in previous, After "+raf.getFilePointer());
 
                 itemSerial.setText("Serial Number: " +raf.readUTF().trim());
                 inFirstName.setText(raf.readUTF().trim());
@@ -179,9 +171,6 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                System.out.println("in previous, After reading "+raf.getFilePointer());
-
-                System.out.println("Working from previous button");
             } catch (Exception ex) {
                 this.showAlert(Alert.AlertType.ERROR, "Error", "Error reading file", "Error while reading the file. Please make sure the file" +
                         "exists and in the correct location.");
@@ -202,10 +191,8 @@ public class Main extends Application {
                 tCity.setText(raf.readUTF().trim());
                 tProvince.setValue(raf.readUTF().trim());
                 tPostalCode.setText(raf.readUTF().trim());
-                System.out.println("in last, after reading " +raf.getFilePointer());
                 System.out.println("Length "+length);
 
-                System.out.println("Working from last button");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -232,7 +219,6 @@ public class Main extends Application {
                 raf.writeUTF(paddedPostalCode);
                 raf.writeChar('\n');
                 raf.seek(raf.getFilePointer() - 2);
-                System.out.println("in update, after writing" +raf.getFilePointer());
                 this.showAlert(Alert.AlertType.CONFIRMATION, "Confirmation","Update Successful", "Address successfully updated");
             } catch (IOException e) {
                 e.printStackTrace();

@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.RandomAccessFile;
 
 public class Main extends Application {
-
+    final int TOKEN_LENGTH = 20;
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Creating RandomAccessFile object with the file name
@@ -51,20 +51,38 @@ public class Main extends Application {
         addButton.prefWidthProperty().bind(pane.widthProperty().divide(6));
         addButton.setOnAction(e -> {
             try{
-                String firstName = inFirstName.getText();
-                String lastName = inLastName.getText();
-                String city = tCity.getText();
-                String province = tProvince.getValue().toString();
-                String postalCode = tPostalCode.getText();
-                String paddedFirstName = String.format("%20s", firstName);
+                //throws an Exception if anyone of the fields is empty
+                if( inFirstName.getText().equals("") || inLastName.getText().equals("") ||
+                    tCity.getText().equals("") || tProvince.getValue().toString().equals("") ||
+                    tPostalCode.getText().equals("")){
+                    throw new Exception();
+                }
+                //retrieving data from the input fields
+                String paddedFirstName = String.format("%-"+TOKEN_LENGTH+"s", inFirstName.getText());
+                String paddedLastName = String.format("%-"+TOKEN_LENGTH+"s", inLastName.getText());
+                String paddedCity = String.format("%-"+TOKEN_LENGTH+"s", tCity.getText());
+                String paddedProvince = String.format("%-"+TOKEN_LENGTH+"s", tProvince.getValue().toString());
+                String paddedPostalCode = String.format("%-"+TOKEN_LENGTH+"s", tPostalCode.getText());
+                long length = raf.length();
+                raf.setLength(length + 1);
+                raf.seek(length);
 
+                raf.writeChars(paddedFirstName);
+                raf.writeChars(paddedLastName);
+                raf.writeChars(paddedCity);
+                raf.writeChars(paddedProvince);
+                raf.writeChars(paddedPostalCode);
+                raf.writeChar('\n');
+
+
+
+                this.showAlert(Alert.AlertType.CONFIRMATION, "Successful", "Operation Successful", "Data was successfully written to file");
             }
             catch (Exception ex){
-
+                this.showAlert(Alert.AlertType.ERROR, "Error", "Error parsing user input", "Please check the data set and try again.");
             }
 
 
-            System.out.println(paddedFirstName);
         });
 
         Button firstButton = new Button("First");
@@ -116,6 +134,10 @@ public class Main extends Application {
 
     public void showAlert(Alert.AlertType type, String title, String header, String content){
         Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public static void main(String[] args) {
